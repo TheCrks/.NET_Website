@@ -1,0 +1,82 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    string path;
+    string GameName;
+    int GameId;
+}
+
+<form asp-page-handler="WikiRequest" method="post">
+    <input asp-for="pageOfRoot" type="hidden" />
+    <input asp-for="Term" id="termInput" type="hidden" />
+    <nav aria-label="...">
+        <ul class="pagination pagination-sm">
+            @for(int i=1;i<=20;i++){
+            <li class="page-item"><button type="submit" class="page-link" onclick="setTermValue(@i)">@i</button></li>
+            }
+        </ul>
+    </nav>
+</form>
+
+<script>
+    function setTermValue(value) {
+        document.getElementById("termInput").value = value;
+    }
+</script>
+
+@if (!string.IsNullOrEmpty(@Model.Data))
+{
+    <div>
+        <img width="100" height="100" src="@Model.DataImg">
+    </div>
+
+    <div>
+        @Model.Data
+    </div>
+}
+
+<div class="row row-cols-3">
+    @if (Model.urls.Count > 0)
+    {
+        
+        @for (int i = 0; i < Model.urls.Count; i++)
+        {
+            path = Model.urls[i];
+            GameName = Model.names[i];
+            GameId = Model.Ids[i];
+            if (Model.pageOfRoot <= 0)
+            {
+                var obj = Model.root.results[i];
+                <form asp-page-handler="GamePage" method="post">
+                    <input hidden asp-for="@Model.GameId" />
+                    <a asp-page="/game" asp-route-page="0" asp-route-id="@obj.id">
+                        <div class="card">
+                            <figure class="figure">
+                                <img src="@path" class="figure-img img-fluid rounded">
+                                <figcaption class="figure-caption">@GameName</figcaption>
+                            </figure>
+                        </div>
+                    </a>
+                </form>
+            }
+            else
+            {
+                var obj = Model.nextRoot.results[i];
+                <form asp-page-handler="GamePage" method="post">
+                    <input hidden asp-for="@Model.GameId" />
+                    <a asp-page="/game" asp-route-pageOfRoot="@Model.pageRoute" asp-route-id="@obj.id">
+                        <div class="card">
+                            <figure class="figure">
+                                <img src="@path" class="figure-img img-fluid rounded">
+                                <figcaption class="figure-caption">@GameName</figcaption>
+                            </figure>
+                        </div>
+                    </a>
+                </form>
+            }
+            
+            
+        }
+    }
+</div>

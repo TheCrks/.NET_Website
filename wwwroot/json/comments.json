@@ -1,0 +1,106 @@
+[
+  {
+    "Id": 1,
+    "GameId": -1,
+    "Name": "Default",
+    "Text": "Default",
+    "Time": "2012-04-23T18:25:43.511Z",
+    "Rating": 3
+  },
+  {
+    "Id": 2,
+    "GameId": 0,
+    "Name": null,
+    "Text": null,
+    "Time": "2023-06-03T16:05:22.3552633+03:00",
+    "Rating": 3
+  },
+  {
+    "Id": 3,
+    "GameId": 0,
+    "Name": "Umut",
+    "Text": "Nice Game!",
+    "Time": "2023-06-03T16:10:46.927312+03:00",
+    "Rating": 3
+  },
+  {
+    "Id": 4,
+    "GameId": 0,
+    "Name": "Umut",
+    "Text": "Nice Game",
+    "Time": "2023-06-03T16:22:13.3772626+03:00",
+    "Rating": 3
+  },
+  {
+    "Id": 5,
+    "GameId": 3328,
+    "Name": "Umut",
+    "Text": "Nice Game!",
+    "Time": "2023-06-04T13:26:30.3262138+03:00",
+    "Rating": 5
+  },
+  {
+    "Id": 7,
+    "GameId": 3328,
+    "Name": "Eser",
+    "Text": "5/5",
+    "Time": "2023-06-04T13:26:52.1834945+03:00",
+    "Rating": 5
+  },
+  {
+    "Id": 8,
+    "GameId": 0,
+    "Name": "Umut",
+    "Text": "3/5",
+    "Time": "2023-06-05T15:16:01.4184098+03:00",
+    "Rating": 3
+  },
+  {
+    "Id": 9,
+    "GameId": 0,
+    "Name": "umut",
+    "Text": "asd",
+    "Time": "2023-06-05T15:17:49.6715063+03:00",
+    "Rating": 3
+  },
+  {
+    "Id": 10,
+    "GameId": 0,
+    "Name": "asda",
+    "Text": "dsad",
+    "Time": "2023-06-05T15:19:18.8304939+03:00",
+    "Rating": 3
+  },
+  {
+    "Id": 11,
+    "GameId": 0,
+    "Name": "asdas",
+    "Text": "asdada",
+    "Time": "2023-06-05T15:23:07.6978319+03:00",
+    "Rating": 2
+  },
+  {
+    "Id": 12,
+    "GameId": 290856,
+    "Name": "asdas",
+    "Text": "dasdasd",
+    "Time": "2023-06-05T15:24:53.189493+03:00",
+    "Rating": 2
+  },
+  {
+    "Id": 13,
+    "GameId": 23587,
+    "Name": "deneme",
+    "Text": "deneme",
+    "Time": "2023-06-05T15:45:12.487338+03:00",
+    "Rating": 5
+  },
+  {
+    "Id": 6,
+    "GameId": 3328,
+    "Name": "Enes",
+    "Text": "Bad Game!",
+    "Time": "2023-06-05T16:05:39.8852649+03:00",
+    "Rating": 4
+  }
+]

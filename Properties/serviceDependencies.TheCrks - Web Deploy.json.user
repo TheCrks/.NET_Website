@@ -1,0 +1,30 @@
+{
+  "dependencies": {},
+  "parameters": {
+    "TheCrks.subscriptionId": {
+      "Name": "TheCrks.subscriptionId",
+      "Type": "subscription",
+      "Value": "88b2c8ab-7c23-4bba-8b31-e50843ab7972"
+    },
+    "subscriptionId": {
+      "Name": "subscriptionId",
+      "Type": "subscription",
+      "Value": "88b2c8ab-7c23-4bba-8b31-e50843ab7972"
+    },
+    "TheCrks.resourceGroupLocation": {
+      "Name": "TheCrks.resourceGroupLocation",
+      "Type": null,
+      "Value": "westeurope"
+    },
+    "TheCrks.resourceGroupName": {
+      "Name": "TheCrks.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "TheCrksResourceGroup"
+    },
+    "TheCrks.resourceName": {
+      "Name": "TheCrks.resourceName",
+      "Type": null,
+      "Value": "TheCrks"
+    }
+  }
+}

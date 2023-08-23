@@ -1,0 +1,388 @@
+﻿@page
+@model WebApplication1.Pages.gameModel
+@{
+    if(Model.result != null)
+        ViewData["Title"] = Model.result.name;
+    else if(Model.nextresult != null)
+        ViewData["Title"] = Model.nextresult.name;
+    int GameID;
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+@if(Model.result != null){
+    <div class="row">
+        <div class="col-6">
+            <img src="@Model.result.background_image" class="figure-img img-fluid rounded">
+            <figcaption class="figure-caption">@Model.result.name</figcaption>
+            <figcaption class="figure-caption text-right">@Model.appModel.price</figcaption>
+        </div>
+        <div class="col-4">
+            <p>Steam Review: @Model.appModel.reviewSummary</p>
+            <p>Genres: </p>
+            <ul>
+            @foreach (var genre in Model.result.genres)
+            {
+                <li>@genre.name</li>
+            }
+                <ul>
+        </div>
+        <div class="col">
+            @if (Model.totalRating == -1)
+            {
+                <p>
+                    Rating: No raitng on this site,<br>
+                    Here is the Metacritic score instead:  
+                </p>
+                <div class="row">
+                    <div class="col bg-success align-content-center text-center text-light">
+                        <h1 class="display-1"> @Model.result.metacritic</h1>
+                    </div>
+                </div>
+                
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col bg-warning align-content-center text-center text-light">
+                        <h1 class="display-1"> @Model.totalRating</h1>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+ 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <section class="content-item" id="comments">
+    <div class="container">   
+    	<div class="row">
+            <div class="col-sm-8">   
+                <form asp-page-handler="CommentRequest" method="post">
+                        <h3 class="pull-left">New Comment</h3><br><br>
+                     <input type="hidden" asp-for="GameID">
+                    <input asp-for="@Model.Name" type="text" placeholder="Name" required="">
+                        <div class="rating">
+                            <input type="radio" name="rating" value="5" id="rating-5"><label for="rating-5">☆</label>
+                            <input type="radio" name="rating" value="4" id="rating-4"><label for="rating-4">☆</label>
+                            <input type="radio" name="rating" value="3" id="rating-3"><label for="rating-3">☆</label>
+                            <input type="radio" name="rating" value="2" id="rating-2"><label for="rating-2">☆</label>
+                            <input type="radio" name="rating" value="1" id="rating-1"><label for="rating-1">☆</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                    <textarea asp-for="@Model.Text" class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                            </div>
+                        </div>  	
+                    </fieldset>
+                </form>
+                    <br><br><br><br><br>
+                <h3>Comments</h3>
+                    <br><br>
+                    @if(Model.commentModels != null){
+                    @foreach (var comment in Model.commentModels)
+                    {
+                <!-- COMMENT 1 - START -->
+                
+                <div class="media">
+                    <div class="media-body">
+                        <div class="comment" id ="comment-@comment.Id">
+
+                        <h4 class="media-heading">@comment.Name</h4>
+                                        <div class="rating non-interactive">
+                                            @for (int i = 5; i >= 1; i--)
+                                            {
+                                                <span class="star @(comment.Rating < i ? "filled" : "")"><i class="fas fa-star"></i></span>
+                                            }
+                                        </div>
+                        <p>@comment.Text</p>
+                        <ul class="list-unstyled list-inline media-detail pull-left">
+                        <li><i class="fa fa-calendar"></i>  @comment.Time</li>
+                        </ul>
+                        </div>
+                                    <form asp-page-handler="UpdateRequest" method="post">
+                                        <div class="UpdateForm" id="updateForm-@comment.Id" style="display:none">
+                                            <h3 class="pull-left">Edit Comment</h3><br><br>
+                                            <input type="hidden" asp-for="GameID" />
+                                            <input type="hidden" asp-for="CommentId" value="@comment.Id" />
+                                            <input asp-for="@Model.Name" type="text" value="@comment.Name" required=""></input>
+                                            <div class="rating">
+                                                <div class="rating">
+                                                    <div class="rating">
+                                                        <input type="radio" name="rating-@comment.Id" value="5" id="rating-@comment.Id-5" @(comment.Rating == 5 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-5">☆</label>
+                                                        <input type="radio" name="rating-@comment.Id" value="4" id="rating-@comment.Id-4" @(comment.Rating == 4 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-4">☆</label>
+                                                        <input type="radio" name="rating-@comment.Id" value="3" id="rating-@comment.Id-3" @(comment.Rating == 3 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-3">☆</label>
+                                                        <input type="radio" name="rating-@comment.Id" value="2" id="rating-@comment.Id-2" @(comment.Rating == 2 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-2">☆</label>
+                                                        <input type="radio" name="rating-@comment.Id" value="1" id="rating-@comment.Id-1" @(comment.Rating == 1 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-1">☆</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                            <fieldset>
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                                        @{
+                                                            Model.Text = comment.Text;
+                                                        }
+                                                        <textarea asp-for="@Model.Text" class="form-control" id="message" required=""></textarea>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                        </div>
+                                    </form>
+                        <ul class ="list-unstyled list-inline media-detail pull-right">
+                           
+                            <input type="hidden" asp-for="GameID" />
+                            <input type="hidden" asp-for="CommentId" value="@comment.Id" />
+                            <li><button class="btn-secondary" id="editButton-@comment.Id">Edit</button></li>
+         
+                            <form asp-page-handler="DeleteRequest" method="post">
+                            <input type="hidden" asp-for="GameID" />
+                            <input type="hidden" asp-for="CommentId" value="@comment.Id" />
+                            <li><button type="submit" class="btn-danger">Delete</button></li>
+                            </form>
+                        </ul>
+                    </div>
+                </div>
+                
+                <br/><br/>
+                <!-- COMMENT 1 - END -->
+                        }
+                    }
+            </div>
+        </div>
+    </div>
+</section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var editButtons = document.querySelectorAll(".btn-secondary");
+            var updateForms = document.querySelectorAll(".UpdateForm");
+            var comments = document.querySelectorAll(".comment");
+
+            editButtons.forEach(function (editButton, index) {
+                var updateForm = updateForms[index];
+                var comment = comments[index];
+                editButton.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    updateForm.style.display = updateForm.style.display === "none" ? "block" : "none";
+                    comment.style.display = updateForm.style.display === "none" ? "block" : "none";
+                });
+            });
+        });
+    </script>
+}
+
+else if(Model.nextresult != null){
+    <div class="row">
+        <div class="col-6">
+            <img src="@Model.nextresult.background_image" class="figure-img img-fluid rounded">
+            <figcaption class="figure-caption">@Model.nextresult.name</figcaption>
+            <figcaption class="figure-caption text-right">@Model.appModel.price</figcaption>
+        </div>
+        <div class="col-4">
+            <p>Steam Review: @Model.appModel.reviewSummary</p>
+            <p>Genres: </p>
+            <ul>
+                @foreach (var genre in Model.nextresult.genres)
+                {
+                    <li>@genre.name</li>
+                }
+                <ul>
+        </div>
+        <div class="col">
+            @if (Model.totalRating == -1)
+            {
+                <p>
+                    Rating: No raitng on this site,<br>
+                    Here is the Metacritic score instead:
+                </p>
+                <div class="row">
+                    <div class="col bg-success align-content-center text-center text-light">
+                        <h1 class="display-1"> @Model.nextresult.metacritic</h1>
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col bg-warning align-content-center text-center text-light">
+                        <h1 class="display-1"> @Model.totalRating</h1>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <section class="content-item" id="comments">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <form asp-page-handler="CommentRequest" method="post">
+                        <h3 class="pull-left">New Comment</h3><br><br>
+                        <input type="hidden" asp-for="GameID" value="@Model.GameID">
+                        <input type="hidden" asp-for="pageOfRoot" value="@Model.pageOfRoot">
+                        <input asp-for="@Model.Name" type="text" placeholder="Name" required="">
+                        <div class="rating">
+                            <input type="radio" name="rating" value="5" id="rating-5"><label for="rating-5">☆</label>
+                            <input type="radio" name="rating" value="4" id="rating-4"><label for="rating-4">☆</label>
+                            <input type="radio" name="rating" value="3" id="rating-3"><label for="rating-3">☆</label>
+                            <input type="radio" name="rating" value="2" id="rating-2"><label for="rating-2">☆</label>
+                            <input type="radio" name="rating" value="1" id="rating-1"><label for="rating-1">☆</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                    <textarea asp-for="@Model.Text" class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <br><br><br><br><br>
+                    <h3>Comments</h3>
+                    <br><br>
+                    @if (Model.commentModels != null)
+                    {
+                        @foreach (var comment in Model.commentModels)
+                        {
+                            <!-- COMMENT 1 - START -->
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="comment" id="comment-@comment.Id">
+
+                                        <h4 class="media-heading">@comment.Name</h4>
+                                        <div class="rating non-interactive">
+                                            @for (int i = 5; i >= 1; i--)
+                                            {
+                                                <span class="star @(comment.Rating < i ? "filled" : "")"><i class="fas fa-star"></i></span>
+                                            }
+                                        </div>
+                                        <p>@comment.Text</p>
+                                        <ul class="list-unstyled list-inline media-detail pull-left">
+                                            <li><i class="fa fa-calendar"></i>  @comment.Time</li>
+                                        </ul>
+                                    </div>
+                                    <form asp-page-handler="UpdateRequest" method="post">
+                                        <div class="UpdateForm" id="updateForm-@comment.Id" style="display:none">
+                                            <h3 class="pull-left">Edit Comment</h3><br><br>
+                                            <input type="hidden" asp-for="GameID" />
+                                            <input type="hidden" asp-for="pageOfRoot" value="@Model.pageOfRoot">
+                                            <input type="hidden" asp-for="CommentId" value="@comment.Id" />
+                                            <input asp-for="@Model.Name" type="text" value="@comment.Name" required=""></input>
+                                            <div class="rating">
+                                                <div class="rating">
+                                                    <div class="rating">
+                                                        <input type="radio" name="rating-@comment.Id" value="5" id="rating-@comment.Id-5" @(comment.Rating == 5 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-5">☆</label>
+                                                        <input type="radio" name="rating-@comment.Id" value="4" id="rating-@comment.Id-4" @(comment.Rating == 4 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-4">☆</label>
+                                                        <input type="radio" name="rating-@comment.Id" value="3" id="rating-@comment.Id-3" @(comment.Rating == 3 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-3">☆</label>
+                                                        <input type="radio" name="rating-@comment.Id" value="2" id="rating-@comment.Id-2" @(comment.Rating == 2 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-2">☆</label>
+                                                        <input type="radio" name="rating-@comment.Id" value="1" id="rating-@comment.Id-1" @(comment.Rating == 1 ? "checked" : "") />
+                                                        <label for="rating-@comment.Id-1">☆</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                            <fieldset>
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                                        @{
+                                                            Model.Text = comment.Text;
+                                                        }
+                                                        <textarea asp-for="@Model.Text" class="form-control" id="message" required=""></textarea>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                        </div>
+                                    </form>
+                                    <ul class="list-unstyled list-inline media-detail pull-right">
+
+                                        <input type="hidden" asp-for="GameID" value="@Model.GameID"/>
+                                        <input type="hidden" asp-for="pageOfRoot" value="@Model.pageOfRoot">
+                                        <input type="hidden" asp-for="CommentId" value="@comment.Id" />
+                                        <li><button class="btn-secondary" id="editButton-@comment.Id">Edit</button></li>
+
+                                        <form asp-page-handler="DeleteRequest" method="post">
+                                            <input type="hidden" asp-for="GameID" />
+                                            <input type="hidden" asp-for="pageOfRoot" value="@Model.pageOfRoot">
+                                            <input type="hidden" asp-for="CommentId" value="@comment.Id" />
+                                        <li><button type="submit" class="btn-danger">Delete</button></li>
+                                        </form>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <br />
+                            <!-- COMMENT 1 - END -->
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () { 
+            var editButtons = document.querySelectorAll(".btn-secondary");
+            var updateForms = document.querySelectorAll(".UpdateForm");
+            var comments = document.querySelectorAll(".comment");
+
+            editButtons.forEach(function (editButton, index) {
+                var updateForm = updateForms[index];
+                var comment = comments[index];
+                editButton.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    updateForm.style.display = updateForm.style.display === "none" ? "block" : "none";
+                    comment.style.display = updateForm.style.display === "none" ? "block" : "none";
+                });
+            });
+        });
+    </script>
+}
